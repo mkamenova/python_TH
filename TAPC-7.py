@@ -55,7 +55,7 @@ notice.
 
 """
 
-def validate_company_came(content, expected):
+def validate_company_name_assert(content, expected):
     '''
     content: string, the text we search in.
     expected: string, variable set to 'Anonymous Ltd.'
@@ -65,10 +65,6 @@ def validate_company_came(content, expected):
     pattern = re.compile(r'(\w+) Ltd\.')
 
     for match in pattern.finditer(content):
-        if match.group(0) != expected:
-#            print('Sorry')
-            return False
-    return True
-
-
-print(validate_company_came(sample_text_3, expected_name))
+        assert match.group(0) == expected
+    
+print(validate_company_name_assert(sample_text_2, expected_name))
