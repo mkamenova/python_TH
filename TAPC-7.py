@@ -6,8 +6,8 @@ Created on Thu Jun 28 10:38:41 2018
 """
 import re
 
-expectedName = 'Anonymous Ltd.'
-sampleText1 = """
+expected_name = 'Anonymous Ltd.'
+sample_text_1 = """
 Copyright in these documents published on Hitachi Chemical World-Wide Web Server is owned by Hitachi Ltd.
 Hitachi Ltd. authorizes you to copy the documents for non-commercial use within your organization only, 
 provided that the above copyright notice appears in each and all copies. 
@@ -23,7 +23,7 @@ notice.
 
 """
 
-sampleText2 = """
+sample_text_2 = """
 Copyright in these documents published on Hitachi Chemical World-Wide Web Server is owned by Hitachi Ltd.
 Anonymous Ltd. authorizes you to copy the documents for non-commercial use within your organization only, 
 provided that the above copyright notice appears in each and all copies. 
@@ -39,7 +39,7 @@ notice.
 
 """
 
-sampleText3 = """
+sample_text_3 = """
 Copyright in these documents published on Hitachi Chemical World-Wide Web Server is owned by Anonymous Ltd.
 Anonymous Ltd. authorizes you to copy the documents for non-commercial use within your organization only, 
 provided that the above copyright notice appears in each and all copies. 
@@ -55,29 +55,20 @@ notice.
 
 """
 
-def validateCompanyName(content, expectedN):
+def validate_company_came(content, expected):
     '''
-    content: string, a text.
-    expectedN: string, variable set to 'Anonymous Ltd.'
+    content: string, the text we search in.
+    expected: string, variable set to 'Anonymous Ltd.'
     
-    returns: boolean, False if there are company names different than 
-    'Anonymous Ltd.'
+    returns: boolean, True - only when all Ltd. companies are 'Anonymous Ltd.'
     '''
-    counter = 0
     pattern = re.compile(r'(\w+) Ltd\.')
-    matches = pattern.finditer(content)
-    i = 0
-    for match in matches:
-        temp = match.group(0)
-        if temp == expectedN:
-            counter += 1
-        i += 1
-    if counter == i:
-#        print('All annonymous, ok')
-        return True
-    else:
-#        print('Sorry, ' + str(counter) + ' out of ' + str(i) + ' matches are validated')
-        return False
+
+    for match in pattern.finditer(content):
+        if match.group(0) != expected:
+#            print('Sorry')
+            return False
+    return True
 
 
-print(validateCompanyName(sampleText3, expectedName))
+print(validate_company_came(sample_text_3, expected_name))
